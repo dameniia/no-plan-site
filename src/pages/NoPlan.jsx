@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import "../css/noplan.css";
@@ -166,7 +167,7 @@ export function NoPlan() {
       <nav className="np-nav">
         <span className="np-nav-logo">noplan</span>
         <div className="np-nav-actions">
-          <a href="https://adameniia.com/projects" className="np-pill np-pill--ghost">All projects</a>
+          <Link to="/feedback" className="np-pill np-pill--ghost">Send feedback</Link>
           <a href="#roadmap" className="np-pill np-pill--solid">See the roadmap</a>
         </div>
       </nav>
@@ -435,7 +436,10 @@ export function NoPlan() {
 
       <div className="np-bar">
         <p><b>noplan</b> — in development, coming to the App Store.</p>
-        <a href="https://adameniia.com" className="np-pill np-pill--ghost">Back to portfolio</a>
+        <div className="np-nav-actions">
+          <Link to="/feedback" className="np-pill np-pill--ghost">Send feedback</Link>
+          <a href="https://adameniia.com" className="np-pill np-pill--ghost">Back to portfolio</a>
+        </div>
       </div>
     </div>
   );

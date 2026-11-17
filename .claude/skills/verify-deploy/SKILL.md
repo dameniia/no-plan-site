@@ -13,6 +13,10 @@ A green GitHub run does NOT mean the site changed. Check in this order:
    - `530 Login incorrect` = wrong `FTP_USERNAME`/`FTP_PASSWORD` (username is `u103061112.no-plan.app`). `ENOTFOUND` = bad `FTP_SERVER` (bare IP, no `ftp://`).
 2. **Secrets** — `cd /Users/andreidameniia/Developer/no-plan-site && gh secret list` (check timestamps; `gh` acts on the current repo).
 3. **Origin vs CDN** — compare `curl -s "https://no-plan.app/?x=$RANDOM" | grep -o '<title>[^<]*'` (bypasses cache) with the plain URL. Plain shows WordPress/old page but `?x=` is right = stale CDN: purge in hPanel (Websites → no-plan.app → Performance → Cache Manager). `curl -sI https://no-plan.app/ | grep -iE "cache|age|x-hcdn"` shows `HIT`/age.
-4. **Pages** — `/`, `/post`, `/images/noplan-icon.png` → 200; `https://adameniia.com/noplan` → 301 to https://no-plan.app/.
+4. **Pages** — `/`, `/post`, `/feedback`, `/images/noplan-icon.png` → 200; `https://adameniia.com/noplan` → 301 to https://no-plan.app/.
 
 To inspect folders, use a throwaway branch with a read-only workflow running `curl --list-only ftp://…`, then delete the branch.
+
+## Feedback form check
+
+Validation paths send no email: `curl -s -X POST https://no-plan.app/api/feedback.php -H 'Content-Type: application/json' -d '{"message":"hi"}'` → `{"ok":false,"error":"message_too_short"}`; `curl -s https://no-plan.app/api/feedback.php` (GET) → 405. Only a valid message sends mail to admin@no-plan.app, so send one real test after changes to `feedback.php` and confirm it arrives (check spam once).
