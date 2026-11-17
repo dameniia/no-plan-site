@@ -32,6 +32,12 @@
   padding: 0;
 }
 
+/* A <legend> isn't a flex item, so the field's gap doesn't apply to it. Lay this fieldset out as a
+   plain block and give the legend the same 8px the other labels get from the gap. */
+.np-field--chips { display: block; }
+
+.np-field--chips legend.np-label { margin-bottom: 8px; }
+
 .np-optional {
   font-weight: 400;
   color: var(--np-ink-2);
