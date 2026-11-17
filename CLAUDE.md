@@ -13,9 +13,13 @@ pnpm lint
 
 ## Stack and structure
 
-React 18 + React Router 7 + Vite (SWC), pnpm, no TypeScript. Routes (`src/App.jsx`): `/` product page (`src/pages/NoPlan.jsx`) and `/post` (a 1200x627 canvas used to screenshot a LinkedIn post). Styles are global: `src/css/noplan.css` owns the whole palette via `--np-*` variables on `.np-root` (light Apple-style, not the app's monochrome UI); `src/index.css` is only a minimal reset. Hero video and screenshots are hosted on Cloudinary; the app icon and SVGs are in `public/images/`. Links back to the portfolio are plain `<a>` to https://adameniia.com.
+React 18 + React Router 7 + Vite (SWC), pnpm, no TypeScript. Routes (`src/App.jsx`): `/` product page (`src/pages/NoPlan.jsx`), `/feedback` (`src/pages/Feedback.jsx`) and `/post` (a 1200x627 canvas used to screenshot a LinkedIn post). Styles are global: `src/css/noplan.css` owns the whole palette via `--np-*` variables on `.np-root` (light Apple-style, not the app's monochrome UI); `src/index.css` is only a minimal reset. Hero video and screenshots are hosted on Cloudinary; the app icon and SVGs are in `public/images/`. Links back to the portfolio are plain `<a>` to https://adameniia.com.
 
 Copy that mirrors the app (feature list, tech stack, roadmap phases in `NoPlan.jsx`) should be updated when the app's `docs/BACKLOG.md` / roadmap changes.
+
+## Feedback form
+
+`/feedback` posts JSON to `public/api/feedback.php` (deployed to `/api/feedback.php`), which emails **admin@no-plan.app** with PHP `mail()`. Fields: category, message (5-4000 chars), optional email (used as Reply-To). Protections: same-origin check, hidden `website` honeypot, per-visitor (5/h) and global (60/h) rate limits keyed on a hashed IP in the system temp dir. Nothing else is stored. Client logic and error copy live in `src/lib/sendFeedback.js`; the PHP error codes map to those messages, so change both together. Vite's dev server doesn't run PHP (and PHP isn't installed on the dev Mac), so `vite.config.js` has a dev-only `feedbackDevMock` plugin that answers `/api/feedback.php` with the same validation and JSON but only logs the message to the terminal (nothing is emailed; it is not part of the production build). If you change validation rules in `feedback.php`, mirror them in the mock. The real PHP and the email are only exercised on production (a successful test sends a real email to admin@).
 
 ## Deployment (Hostinger FTP — read before touching)
 
