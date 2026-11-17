@@ -523,6 +523,14 @@
 
 .np-bar b { color: var(--np-ink); font-weight: 600; }
 
+/* Pills in the bottom bar; unlike the top nav they stay visible on small screens */
+.np-bar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
 /* ── Scroll reveal ── */
 .np-reveal {
   opacity: 0;
@@ -564,8 +572,16 @@
   .np-hero { padding-top: 44px; }
   .np-stats { grid-template-columns: 1fr; gap: 36px; }
   .np-card { flex: 0 0 82vw; }
-  .np-nav-actions .np-pill--ghost { display: none; }
+  .np-nav { padding: 0 16px; gap: 8px; }
+  .np-nav-actions { gap: 8px; flex-wrap: nowrap; }
+  .np-nav-actions .np-pill { font-size: 13px; padding: 8px 12px; }
+  .np-nav-actions .np-pill--ghost:not(.np-pill--keep) { display: none; }
   .np-tech p { padding-left: 0; }
+}
+
+/* Very narrow phones: keep only the feedback pill in the top bar so nothing wraps */
+@media (max-width: 380px) {
+  .np-nav-actions .np-pill--solid { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {

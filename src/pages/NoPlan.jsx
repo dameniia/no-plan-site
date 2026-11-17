@@ -167,7 +167,7 @@ export function NoPlan() {
       <nav className="np-nav">
         <span className="np-nav-logo">noplan</span>
         <div className="np-nav-actions">
-          <Link to="/feedback" className="np-pill np-pill--ghost">Send feedback</Link>
+          <Link to="/feedback" className="np-pill np-pill--ghost np-pill--keep">Send feedback</Link>
           <a href="#roadmap" className="np-pill np-pill--solid">See the roadmap</a>
         </div>
       </nav>
@@ -436,7 +436,7 @@ export function NoPlan() {
 
       <div className="np-bar">
         <p><b>noplan</b> — in development, coming to the App Store.</p>
-        <div className="np-nav-actions">
+        <div className="np-bar-actions">
           <Link to="/feedback" className="np-pill np-pill--ghost">Send feedback</Link>
           <a href="https://adameniia.com" className="np-pill np-pill--ghost">Back to portfolio</a>
         </div>
