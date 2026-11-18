@@ -1,16 +1,19 @@
 /* ──────────────────────────────────────────────
    noplan — product page
-   Light Apple-style system: white / #f5f5f7 bands
+   Apple-style layout in the app's monochrome palette: white / #f5f5f5 bands
    ────────────────────────────────────────────── */
 
 .np-root {
-  --np-bg:       #ffffff;
-  --np-bg-alt:   #f5f5f7;
-  --np-ink:      #1d1d1f;
-  --np-ink-2:    #6e6e73;
-  --np-blue:     #0071e3;
-  --np-blue-ink: #06c;
-  --np-hairline: #d2d2d7;
+  /* Mirrors the app's monochrome palette (AppColors in no-plan-app): black and
+     white, no accent colour. Links are told apart by an underline, not a hue. */
+  --np-bg:       #ffffff;  /* surface */
+  --np-bg-alt:   #f5f5f5;  /* between background #FAFAFA and muted #F0F0F0 */
+  --np-ink:      #0a0a0a;  /* textPrimary */
+  --np-ink-2:    #737373;  /* textSecondary */
+  --np-accent:     #0a0a0a;  /* activeFill */
+  --np-accent-hover: #2a2a2a;
+  --np-accent-ink: #0a0a0a;
+  --np-hairline: #e5e5e5;  /* border */
   --np-well:     980px;
 
   background: var(--np-bg);
@@ -192,14 +195,14 @@
 }
 
 .np-pill--solid {
-  background: var(--np-blue);
+  background: var(--np-accent);
   color: #fff;
 }
 
-.np-pill--solid:hover { background: #0077ed; }
+.np-pill--solid:hover { background: var(--np-accent-hover); }
 
 .np-pill--ghost {
-  color: var(--np-blue-ink);
+  color: var(--np-accent-ink);
   border-color: var(--np-hairline);
   background: transparent;
 }
@@ -265,8 +268,13 @@
 .np-body:last-child { margin-bottom: 0; }
 .np-body strong { color: var(--np-ink); font-weight: 600; }
 
-.np-link { color: var(--np-blue-ink); text-decoration: none; }
-.np-link:hover { text-decoration: underline; }
+.np-link {
+  color: var(--np-accent-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--np-hairline);
+  text-underline-offset: 3px;
+}
+.np-link:hover { text-decoration-color: currentColor; }
 
 .np-points { list-style: none; padding: 0; }
 .np-points li { position: relative; padding-left: 18px; }
@@ -347,7 +355,7 @@
   width: 62px;
   height: 18px;
   border-radius: 12px;
-  background: #1d1d1f;
+  background: var(--np-ink);
 }
 
 .np-screen-title {
@@ -372,7 +380,7 @@
 .np-row-meta { font-size: 10.5px; color: var(--np-ink-2); }
 
 .np-nudge {
-  background: var(--np-blue);
+  background: var(--np-accent);
   color: #fff;
   border-radius: 13px;
   padding: 11px 12px;
@@ -403,7 +411,7 @@
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background: conic-gradient(var(--np-blue) 0 72%, #e8e8ed 72% 100%);
+  background: conic-gradient(var(--np-accent) 0 72%, var(--np-hairline) 72% 100%);
   flex-shrink: 0;
   display: grid;
   place-items: center;
@@ -465,7 +473,7 @@
   font-size: 34px;
   font-weight: 600;
   letter-spacing: -0.03em;
-  color: var(--np-blue);
+  color: var(--np-accent);
   line-height: 1;
   margin-bottom: 4px;
 }
@@ -504,7 +512,7 @@
 .np-phone-cap {
   margin-top: 14px;
   font-size: 13px;
-  color: #6e6e73;
+  color: var(--np-ink-2);
 }
 
 /* ── Stat band ── */
@@ -558,7 +566,7 @@
   width: 26px;
   height: 26px;
   border-radius: 50%;
-  background: var(--np-blue);
+  background: var(--np-accent);
   color: #fff;
   display: grid;
   place-items: center;
@@ -616,8 +624,8 @@
   color: var(--np-ink-2);
 }
 
-.np-badge--done   { background: var(--np-blue); border-color: var(--np-blue); color: #fff; }
-.np-badge--active { border-color: var(--np-blue); color: var(--np-blue-ink); }
+.np-badge--done   { background: var(--np-accent); border-color: var(--np-accent); color: #fff; }
+.np-badge--active { border-color: var(--np-accent); color: var(--np-accent-ink); }
 
 /* ── Sticky footer bar ── */
 .np-bar {
@@ -667,7 +675,7 @@
 /* ── Focus ── */
 .np-root a:focus-visible,
 .np-root summary:focus-visible {
-  outline: 2px solid var(--np-blue);
+  outline: 2px solid var(--np-accent);
   outline-offset: 3px;
   border-radius: 6px;
 }
