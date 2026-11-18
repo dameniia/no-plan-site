@@ -12,7 +12,7 @@ export function SiteFooter() {
       <div className="np-footer-inner">
         <div className="np-footer-brand">
           <Link to="/" className="np-footer-logo">noplan</Link>
-          <p className="np-footer-tagline">You plan. AI helps. No fluff.</p>
+          <p className="np-footer-tagline">App as a tool</p>
           <p className="np-footer-soon">Coming soon to the App Store</p>
         </div>
 
