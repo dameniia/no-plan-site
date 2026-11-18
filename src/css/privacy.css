@@ -34,10 +34,10 @@
 }
 
 .np-legal a {
-  color: var(--np-blue-ink);
-  text-decoration: none;
+  color: var(--np-accent-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--np-hairline);
+  text-underline-offset: 3px;
 }
 
-.np-legal a:hover {
-  text-decoration: underline;
-}
+.np-legal a:hover { text-decoration-color: currentColor; }

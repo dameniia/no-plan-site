@@ -6,7 +6,7 @@
   align-items: center;
   justify-content: center;
   padding: 24px;
-  background: #e8e8ed;
+  background: #f0f0f0;
 }
 
 .np-post {
@@ -62,7 +62,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--np-blue);
+  background: var(--np-accent);
 }
 
 .np-post-phones {

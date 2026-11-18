@@ -57,8 +57,8 @@
 
 .np-input:focus {
   outline: none;
-  border-color: var(--np-blue);
-  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.18);
+  border-color: var(--np-accent);
+  box-shadow: 0 0 0 3px rgba(10, 10, 10, 0.12);
 }
 
 .np-input:disabled { opacity: 0.6; }
@@ -104,7 +104,7 @@
 .np-chip:hover { border-color: var(--np-ink-2); }
 
 .np-chip:has(input:focus-visible) {
-  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.35);
+  box-shadow: 0 0 0 3px rgba(10, 10, 10, 0.25);
 }
 
 .np-chip--on {

@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { SiteNav } from "../components/SiteNav";
+import { SiteFooter } from "../components/SiteFooter";
 import "../css/noplan.css";
 import "../css/privacy.css";
 
@@ -20,12 +22,7 @@ export function Privacy() {
 
   return (
     <div className="np-root">
-      <nav className="np-nav">
-        <Link to="/" className="np-nav-logo">noplan</Link>
-        <div className="np-nav-actions">
-          <Link to="/" className="np-pill np-pill--ghost">Back to noplan</Link>
-        </div>
-      </nav>
+      <SiteNav />
 
       <main className="np-section np-legal">
         <article className="np-legal-inner">
@@ -126,6 +123,7 @@ export function Privacy() {
           </p>
         </article>
       </main>
+      <SiteFooter />
     </div>
   );
 }
