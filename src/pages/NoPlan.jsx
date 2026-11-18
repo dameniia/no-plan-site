@@ -140,6 +140,13 @@ export function NoPlan() {
     return () => observer.disconnect();
   }, []);
 
+  // Arriving from another page with a hash (e.g. /#roadmap from the FAQ): the browser
+  // looks for the anchor before React renders it, so scroll once the page exists.
+  useEffect(() => {
+    const id = window.location.hash.slice(1);
+    if (id) document.getElementById(id)?.scrollIntoView();
+  }, []);
+
   useEffect(() => {
     const targets = document.querySelectorAll(".np-reveal");
 
@@ -447,6 +454,7 @@ export function NoPlan() {
       <div className="np-bar">
         <p>
           <b>noplan</b> — in development, coming to the App Store. ·{" "}
+          <Link to="/faq" className="np-link">FAQ</Link> ·{" "}
           <Link to="/privacy" className="np-link">Privacy</Link>
         </p>
         <div className="np-bar-actions">
