@@ -50,7 +50,7 @@ const HIGHLIGHTS = [
 const TECH = [
   { name: "SwiftUI", desc: "Native iOS UI, built the way Apple intended — fast, fluid, and at home on the platform." },
   { name: "SwiftData", desc: "On-device persistence. No account, no server, no sync. Your history stays on your iPhone." },
-  { name: "Claude API", desc: "Powers the AI features: equipment scanning, exercise suggestions, and workout plans built around your profile." },
+  { name: "On-device AI, Claude or ChatGPT", desc: "You pick the model. Apple's on-device model is the default and keeps everything on your iPhone; Claude or ChatGPT run with your own API key. They power equipment scanning, exercise suggestions, and workout plans built around your profile." },
   { name: "HealthKit", desc: "Integrates with Apple Health and reads completed workouts from Apple Watch, so closing a ring logs the session for you." },
 ];
 
@@ -74,6 +74,8 @@ const PHASES = [
   { label: "Stats under each exercise: sessions, est. 1RM, trend, total weight", status: "done" },
   { label: "30 exercise drawings with primary and secondary muscles", status: "done" },
   { label: "Rest-over nudge on the Dynamic Island and Lock Screen", status: "done" },
+  { label: "Choose your AI: on-device, Claude, or ChatGPT", status: "done" },
+  { label: "App Store release", status: "active" },
   { label: "Better audio signals and cues", status: "upcoming" },
   { label: "Better performance and faster AI exercise suggestions", status: "upcoming" },
   { label: "New swap-on-the-fly UX", status: "upcoming" },
@@ -371,8 +373,16 @@ export function NoPlan() {
           <h2 className="np-heading">Your data stays yours.</h2>
           <p className="np-body">
             There is no account to create and no cloud to sync with. Every session you
-            log is written to SwiftData on your iPhone and never leaves it. Nothing to
-            breach, nothing to sell, nothing to export to an advertiser.
+            log is written to SwiftData on your iPhone. Nothing to breach, nothing to
+            sell, nothing to export to an advertiser.
+          </p>
+          <p className="np-body">
+            AI runs on-device by default. If you switch to Claude or ChatGPT, only what
+            the AI needs to answer goes to that provider, with your own key. Apple Health
+            data never leaves your iPhone.
+          </p>
+          <p className="np-body">
+            <Link to="/privacy" className="np-link">Read the privacy policy</Link>
           </p>
         </div>
       </section>
@@ -435,7 +445,10 @@ export function NoPlan() {
       </section>
 
       <div className="np-bar">
-        <p><b>noplan</b> — in development, coming to the App Store.</p>
+        <p>
+          <b>noplan</b> — in development, coming to the App Store. ·{" "}
+          <Link to="/privacy" className="np-link">Privacy</Link>
+        </p>
         <div className="np-bar-actions">
           <Link to="/feedback" className="np-pill np-pill--ghost">Send feedback</Link>
           <a href="https://adameniia.com" className="np-pill np-pill--ghost">Back to portfolio</a>

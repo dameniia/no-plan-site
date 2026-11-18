@@ -1,0 +1,43 @@
+/* Privacy page — builds on the --np-* tokens defined on .np-root in noplan.css */
+
+.np-legal {
+  min-height: calc(100vh - 52px);
+  padding-top: 72px;
+}
+
+.np-legal-inner {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.np-legal-date {
+  font-size: 14px;
+  color: var(--np-ink-2);
+  margin: -8px 0 32px;
+}
+
+.np-legal h2 {
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  margin: 40px 0 12px;
+}
+
+.np-legal ul.np-body {
+  list-style: disc;
+  padding-left: 1.2em;
+}
+
+.np-legal li + li {
+  margin-top: 8px;
+}
+
+.np-legal a {
+  color: var(--np-blue-ink);
+  text-decoration: none;
+}
+
+.np-legal a:hover {
+  text-decoration: underline;
+}

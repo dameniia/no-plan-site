@@ -147,6 +147,9 @@
 .np-body:last-child { margin-bottom: 0; }
 .np-body strong { color: var(--np-ink); font-weight: 600; }
 
+.np-link { color: var(--np-blue-ink); text-decoration: none; }
+.np-link:hover { text-decoration: underline; }
+
 .np-points { list-style: none; padding: 0; }
 .np-points li { position: relative; padding-left: 18px; }
 .np-points li + li { margin-top: 6px; }
