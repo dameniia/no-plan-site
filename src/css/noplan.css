@@ -56,6 +56,124 @@
   gap: 10px;
 }
 
+/* Text links in the shared nav (SiteNav). They stay visible on phones. */
+.np-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-left: auto;
+}
+
+.np-nav-link {
+  font-size: 14px;
+  letter-spacing: -0.01em;
+  color: var(--np-ink-2);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.np-nav-link:hover,
+.np-nav-link.active { color: var(--np-ink); }
+
+.np-nav-cta { margin-left: 8px; }
+
+.np-nav-cta-short { display: none; }
+
+/* ── Footer (SiteFooter) ── */
+.np-footer {
+  background: var(--np-bg-alt);
+  border-top: 1px solid var(--np-hairline);
+  padding: 56px 22px 28px;
+}
+
+.np-footer-inner,
+.np-footer-base {
+  max-width: var(--np-well);
+  margin: 0 auto;
+}
+
+.np-footer-inner {
+  display: grid;
+  grid-template-columns: 1.4fr 2fr;
+  gap: 40px;
+}
+
+.np-footer-logo {
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: -0.374px;
+  color: var(--np-ink);
+  text-decoration: none;
+}
+
+.np-footer-tagline {
+  font-size: 14px;
+  color: var(--np-ink-2);
+  margin: 8px 0 18px;
+}
+
+.np-footer-soon {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--np-ink);
+  padding: 8px 14px;
+  border: 1px solid var(--np-hairline);
+  border-radius: 980px;
+  background: var(--np-bg);
+  margin: 0;
+}
+
+.np-footer-cols {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.np-footer-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.np-footer-col h2 {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--np-ink);
+  margin: 0 0 4px;
+}
+
+.np-footer-col a,
+.np-footer-base a {
+  font-size: 14px;
+  color: var(--np-ink-2);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.np-footer-col a:hover,
+.np-footer-base a:hover { color: var(--np-ink); text-decoration: underline; }
+
+.np-footer-base {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 48px;
+  padding-top: 20px;
+  border-top: 1px solid var(--np-hairline);
+}
+
+.np-footer-base p {
+  font-size: 12px;
+  color: var(--np-ink-2);
+  margin: 0;
+}
+
+.np-footer-base a { font-size: 12px; }
+
 /* ── Pills ── */
 .np-pill {
   display: inline-flex;
@@ -579,12 +697,21 @@
   .np-nav-actions { gap: 8px; flex-wrap: nowrap; }
   .np-nav-actions .np-pill { font-size: 13px; padding: 8px 12px; }
   .np-nav-actions .np-pill--ghost:not(.np-pill--keep) { display: none; }
+  .np-nav-links { gap: 16px; }
+  .np-nav-cta { margin-left: 4px; font-size: 13px; padding: 8px 12px; }
+  .np-nav-cta-long { display: none; }
+  .np-nav-cta-short { display: inline; }
   .np-tech p { padding-left: 0; }
+
+  .np-footer { padding: 44px 22px 24px; }
+  .np-footer-inner { grid-template-columns: 1fr; gap: 36px; }
+  .np-footer-cols { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 32px; }
+  .np-footer-base { margin-top: 36px; }
 }
 
-/* Very narrow phones: keep only the feedback pill in the top bar so nothing wraps */
+/* Very narrow phones: Privacy is still in the footer, so drop it from the top bar */
 @media (max-width: 380px) {
-  .np-nav-actions .np-pill--solid { display: none; }
+  .np-nav-link--optional { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {

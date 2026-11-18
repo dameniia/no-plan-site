@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { SiteNav } from "../components/SiteNav";
+import { SiteFooter } from "../components/SiteFooter";
 import "../css/noplan.css";
 import "../css/faq.css";
 
@@ -192,12 +194,7 @@ export function Faq() {
 
   return (
     <div className="np-root">
-      <nav className="np-nav">
-        <Link to="/" className="np-nav-logo">noplan</Link>
-        <div className="np-nav-actions">
-          <Link to="/feedback" className="np-pill np-pill--ghost np-pill--keep">Send feedback</Link>
-        </div>
-      </nav>
+      <SiteNav />
 
       <main className="np-section np-faq">
         <div className="np-faq-inner">
@@ -245,6 +242,7 @@ export function Faq() {
           </aside>
         </div>
       </main>
+      <SiteFooter />
     </div>
   );
 }

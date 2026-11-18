@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import { SiteNav } from "../components/SiteNav";
+import { SiteFooter } from "../components/SiteFooter";
 import { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import "../css/noplan.css";
@@ -173,13 +175,7 @@ export function NoPlan() {
 
   return (
     <div className="np-root">
-      <nav className="np-nav">
-        <span className="np-nav-logo">noplan</span>
-        <div className="np-nav-actions">
-          <Link to="/feedback" className="np-pill np-pill--ghost np-pill--keep">Send feedback</Link>
-          <a href="#roadmap" className="np-pill np-pill--solid">See the roadmap</a>
-        </div>
-      </nav>
+      <SiteNav />
 
       {/* ── Hero ── */}
       <section className="np-section np-hero">
@@ -452,16 +448,13 @@ export function NoPlan() {
       </section>
 
       <div className="np-bar">
-        <p>
-          <b>noplan</b> — in development, coming to the App Store. ·{" "}
-          <Link to="/faq" className="np-link">FAQ</Link> ·{" "}
-          <Link to="/privacy" className="np-link">Privacy</Link>
-        </p>
+        <p><b>noplan</b> — in development, coming to the App Store.</p>
         <div className="np-bar-actions">
           <Link to="/feedback" className="np-pill np-pill--ghost">Send feedback</Link>
           <a href="https://adameniia.com" className="np-pill np-pill--ghost">Back to portfolio</a>
         </div>
       </div>
+      <SiteFooter />
     </div>
   );
 }
