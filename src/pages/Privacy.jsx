@@ -8,7 +8,7 @@ import "../css/privacy.css";
 // Mirrors docs/PRIVACY-POLICY.md in the app repo (dameniia/no-plan-app), which must
 // stay in step with the app's PrivacyInfo.xcprivacy and App Store privacy label.
 // Change both together, and bump EFFECTIVE when the substance changes.
-const EFFECTIVE = "17 November 2026";
+const EFFECTIVE = "23 November 2026";
 const CONTACT = "admin@no-plan.app";
 
 export function Privacy() {
@@ -41,6 +41,9 @@ export function Privacy() {
           <p className="np-body">Everything you enter is stored only on your device:</p>
           <ul className="np-body">
             <li>Your profile answers, such as activity type and fitness level</li>
+            <li>
+              The name you can optionally give yourself in Profile. It is never sent to an AI model
+            </li>
             <li>Your workouts, plans and exercise history</li>
             <li>Your conversations with the Trainer and Guide</li>
             <li>Your app settings</li>
