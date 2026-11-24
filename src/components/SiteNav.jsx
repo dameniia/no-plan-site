@@ -6,7 +6,10 @@ import PropTypes from "prop-types";
 export function SiteNav({ showFeedback = true }) {
   return (
     <nav className="np-nav" aria-label="Main">
-      <Link to="/" className="np-nav-logo">noplan</Link>
+      <Link to="/" className="np-nav-logo">
+        <img className="np-logo-icon" src="/images/noplan-icon-128.png" alt="" width="128" height="128" />
+        noplan
+      </Link>
       <div className="np-nav-links">
         <NavLink to="/faq" className="np-nav-link">FAQ</NavLink>
         <a href="/#roadmap" className="np-nav-link">Roadmap</a>
