@@ -1,7 +1,16 @@
 RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^ index.html [QSA,L]
+
+# Real files and folders (assets, images, robots.txt, api/feedback.php, ...) are served as-is
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Client-side routes get the SPA. Keep this list in step with the routes in src/App.jsx
+RewriteRule ^(feedback|faq|privacy|post)/?$ index.html [L]
+
+# Anything else (typos, /wp-login.php and other bot probes) is a real 404.
+# The SPA is still the body, so people see the "page not found" screen.
+ErrorDocument 404 /index.html
 
 # Always revalidate HTML so the CDN never pins an old page (hashed /assets files are safe to cache)
 <IfModule mod_headers.c>

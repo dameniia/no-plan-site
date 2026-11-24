@@ -1,0 +1,7 @@
+# no-plan.app — marketing site for the noplan iOS app
+User-agent: *
+Content-Signal: search=yes, ai-input=yes, ai-train=no
+Allow: /
+Disallow: /post
+
+Sitemap: https://no-plan.app/sitemap.xml
