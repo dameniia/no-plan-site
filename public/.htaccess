@@ -18,8 +18,9 @@ ErrorDocument 404 /404.html
   <FilesMatch "\.html$">
     Header set Cache-Control "no-cache"
   </FilesMatch>
-  # Point agents at the plain-text summary of the site (RFC 8288)
+  # Point agents at the plain-text summary of the site (RFC 8288). No escaped quotes:
+  # Hostinger's LiteSpeed sends the backslashes through literally.
   <FilesMatch "^index\.html$">
-    Header set Link "</llms.txt>; rel=\"describedby\"; type=\"text/plain\""
+    Header set Link "</llms.txt>; rel=describedby"
   </FilesMatch>
 </IfModule>
