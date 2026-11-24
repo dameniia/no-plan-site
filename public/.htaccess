@@ -1,11 +1,25 @@
 RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^ index.html [QSA,L]
 
-# Always revalidate HTML so the CDN never pins an old page (hashed /assets files are safe to cache)
+# Real files and folders (assets, images, robots.txt, api/feedback.php, ...) are served as-is
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Each page is pre-rendered to its own HTML file at build time (scripts/prerender.js).
+# Keep this list in step with src/routes.js and the routes in src/App.jsx
+RewriteRule ^(feedback|faq|privacy|post)/?$ $1.html [L]
+
+# Anything else (typos, /wp-login.php and other bot probes) is a real 404,
+# with the pre-rendered "Page not found" page as the body.
+ErrorDocument 404 /404.html
+
 <IfModule mod_headers.c>
+  # Always revalidate HTML so the CDN never pins an old page (hashed /assets files are safe to cache)
   <FilesMatch "\.html$">
     Header set Cache-Control "no-cache"
+  </FilesMatch>
+  # Point agents at the plain-text summary of the site (RFC 8288)
+  <FilesMatch "^index\.html$">
+    Header set Link "</llms.txt>; rel=\"describedby\"; type=\"text/plain\""
   </FilesMatch>
 </IfModule>
