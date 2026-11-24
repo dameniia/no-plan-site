@@ -854,6 +854,9 @@
 }
 
 @media (max-width: 600px) {
+  /* The sticky bar covers too much of a phone screen; its links are already in
+     the nav (Feedback) and the footer (Send feedback, Portfolio). */
+  .np-bar { display: none; }
   .np-phone-pair { gap: 12px; }
   .np-phone-pair .np-phone--sm { width: 150px; border-radius: 28px; padding: 6px; }
   .np-phone-pair .np-phone--sm .np-screen { border-radius: 23px; }
