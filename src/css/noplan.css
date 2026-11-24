@@ -1,6 +1,8 @@
 /* ──────────────────────────────────────────────
    noplan — product page
-   Apple-style layout in the app's monochrome palette: white / #f5f5f5 bands
+   The app's monochrome palette with a gym-hardware feel: condensed, heavy
+   Archivo for headings and numbers (stamped-plate lettering), normal-width
+   Archivo for text, hard 4px/10px corners, ink rules instead of soft shadows.
    ────────────────────────────────────────────── */
 
 .np-root {
@@ -15,12 +17,30 @@
   --np-accent-ink: #0a0a0a;
   --np-hairline: #e5e5e5;  /* border */
   --np-well:     980px;
+  --np-r-sm:     4px;    /* buttons, badges, chips, inputs */
+  --np-r:        10px;   /* cards, photos, panels */
+  --np-font: "Archivo Variable", "Archivo", system-ui, -apple-system, sans-serif;
 
   background: var(--np-bg);
   color: var(--np-ink);
-  font-family: "SF Pro Text", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  font-family: var(--np-font);
   -webkit-font-smoothing: antialiased;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
+}
+
+/* Display style: condensed and heavy. Shared by headings, the logo and numbers. */
+.np-heading,
+.np-nav-logo,
+.np-footer-logo,
+.np-stat-num,
+.np-card-mark,
+.np-card h3,
+.np-tech summary,
+.np-faq-group-title,
+.np-legal h2 {
+  font-stretch: 72%;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
 }
 
 /* index.css applies a universal `* { font-family; color }` reset, which outranks
@@ -41,16 +61,33 @@
   gap: 16px;
   height: 52px;
   padding: 0 22px;
-  background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: saturate(180%) blur(20px);
-  -webkit-backdrop-filter: saturate(180%) blur(20px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  background: var(--np-bg);
+  border-bottom: 2px solid var(--np-ink);
 }
 
+.np-nav-logo,
+.np-footer-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+/* The app icon next to the wordmark; 22.5% radius matches the iOS icon mask. */
+.np-logo-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 22.5%;
+  flex-shrink: 0;
+}
+
+.np-footer-logo { gap: 10px; }
+.np-footer-logo .np-logo-icon { width: 36px; height: 36px; }
+
 .np-nav-logo {
-  font-size: 21px;
-  font-weight: 600;
-  letter-spacing: -0.374px;
+  font-size: 26px;
+  letter-spacing: -0.01em;
+  line-height: 1;
 }
 
 .np-nav-actions {
@@ -69,14 +106,16 @@
 
 .np-nav-link {
   font-size: 14px;
-  letter-spacing: -0.01em;
+  font-weight: 500;
   color: var(--np-ink-2);
   text-decoration: none;
+  text-underline-offset: 6px;
+  text-decoration-thickness: 2px;
   transition: color 0.2s ease;
 }
 
-.np-nav-link:hover,
-.np-nav-link.active { color: var(--np-ink); }
+.np-nav-link:hover { color: var(--np-ink); text-decoration: none; }
+.np-nav-link.active { color: var(--np-ink); text-decoration: underline; }
 
 .np-nav-cta { margin-left: 8px; }
 
@@ -85,7 +124,7 @@
 /* ── Footer (SiteFooter) ── */
 .np-footer {
   background: var(--np-bg-alt);
-  border-top: 1px solid var(--np-hairline);
+  border-top: 2px solid var(--np-ink);
   padding: 56px 22px 28px;
 }
 
@@ -102,9 +141,8 @@
 }
 
 .np-footer-logo {
-  font-size: 21px;
-  font-weight: 600;
-  letter-spacing: -0.374px;
+  font-size: 30px;
+  line-height: 1;
   color: var(--np-ink);
   text-decoration: none;
 }
@@ -121,8 +159,8 @@
   font-weight: 500;
   color: var(--np-ink);
   padding: 8px 14px;
-  border: 1px solid var(--np-hairline);
-  border-radius: 980px;
+  border: 1px solid var(--np-ink);
+  border-radius: var(--np-r-sm);
   background: var(--np-bg);
   margin: 0;
 }
@@ -141,10 +179,8 @@
 }
 
 .np-footer-col h2 {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
+  font-size: 15px;
+  font-weight: 700;
   color: var(--np-ink);
   margin: 0 0 4px;
 }
@@ -182,11 +218,11 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 980px;
+  border-radius: var(--np-r-sm);
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 600;
   line-height: 1;
-  padding: 8px 16px;
+  padding: 9px 16px;
   text-decoration: none;
   white-space: nowrap;
   border: 1px solid transparent;
@@ -203,16 +239,16 @@
 
 .np-pill--ghost {
   color: var(--np-accent-ink);
-  border-color: var(--np-hairline);
+  border-color: var(--np-ink);
   background: transparent;
 }
 
 .np-pill--ghost:hover {
-  border-color: var(--np-ink-2);
-  color: var(--np-ink);
+  background: var(--np-ink);
+  color: #fff;
 }
 
-.np-pill--lg { font-size: 17px; padding: 12px 24px; }
+.np-pill--lg { font-size: 16px; padding: 15px 24px; }
 
 /* ── Section scaffold ── */
 .np-section {
@@ -231,34 +267,34 @@
 
 /* ── Type ── */
 .np-eyebrow {
-  font-size: 21px;
+  font-size: 15px;
   font-weight: 600;
-  letter-spacing: -0.374px;
-  line-height: 1.19;
-  color: var(--np-ink);
-  margin: 0 0 6px;
+  line-height: 1.3;
+  color: var(--np-ink-2);
+  margin: 0 0 10px;
 }
 
 .np-heading {
-  font-size: clamp(32px, 5vw, 56px);
-  font-weight: 600;
-  letter-spacing: -0.015em;
-  line-height: 1.07;
-  margin: 0 0 20px;
+  font-size: clamp(40px, 6.4vw, 76px);
+  letter-spacing: -0.01em;
+  line-height: 0.95;
+  margin: 0 0 24px;
   text-wrap: balance;
 }
 
 .np-heading--hero {
-  font-size: clamp(40px, 7vw, 80px);
-  letter-spacing: -0.02em;
-  line-height: 1.05;
+  font-size: clamp(52px, 8.4vw, 108px);
+  font-stretch: 62%;
+  font-weight: 900;
+  letter-spacing: -0.015em;
+  line-height: 0.88;
+  margin-bottom: 28px;
 }
 
 .np-body {
   font-size: 17px;
   font-weight: 400;
-  line-height: 1.47;
-  letter-spacing: -0.022em;
+  line-height: 1.55;
   color: var(--np-ink-2);
   max-width: 62ch;
   margin: 0 0 16px;
@@ -270,9 +306,11 @@
 
 .np-link {
   color: var(--np-accent-ink);
+  font-weight: 600;
   text-decoration: underline;
+  text-decoration-thickness: 2px;
   text-decoration-color: var(--np-hairline);
-  text-underline-offset: 3px;
+  text-underline-offset: 4px;
 }
 .np-link:hover { text-decoration-color: currentColor; }
 
@@ -284,10 +322,9 @@
   position: absolute;
   left: 0;
   top: 0.65em;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--np-ink-2);
+  width: 8px;
+  height: 2px;
+  background: var(--np-ink);
 }
 
 /* ── Hero ── */
@@ -295,9 +332,10 @@
 
 .np-hero-sub {
   font-size: 19px;
-  line-height: 1.42;
+  line-height: 1.45;
   color: var(--np-ink-2);
-  margin: 0 0 24px;
+  max-width: 34em;
+  margin: 0 auto 28px;
 }
 
 .np-cta-row {
@@ -312,9 +350,9 @@
 .np-phone {
   width: 260px;
   border-radius: 44px;
-  padding: 10px;
-  background: linear-gradient(160deg, #d8d8dc 0%, #a9a9ae 45%, #e4e4e8 100%);
-  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.18);
+  padding: 9px;
+  background: var(--np-ink);
+  box-shadow: 0 0 0 1px #3a3a3a inset;
   flex-shrink: 0;
 }
 
@@ -372,7 +410,7 @@
   justify-content: space-between;
   gap: 8px;
   background: var(--np-bg-alt);
-  border-radius: 11px;
+  border-radius: var(--np-r-sm);
   padding: 9px 11px;
 }
 
@@ -382,7 +420,7 @@
 .np-nudge {
   background: var(--np-accent);
   color: #fff;
-  border-radius: 13px;
+  border-radius: 6px;
   padding: 11px 12px;
 }
 
@@ -445,19 +483,17 @@
   scroll-snap-align: center;
   flex: 0 0 300px;
   background: #fff;
-  border-radius: 22px;
-  padding: 30px 26px;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+  border-radius: var(--np-r);
+  padding: 28px 24px 26px;
+  border: 1.5px solid var(--np-ink);
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
 .np-card h3 {
-  font-size: 22px;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  line-height: 1.2;
+  font-size: 26px;
+  line-height: 1.02;
   margin: 0;
   text-wrap: balance;
 }
@@ -469,10 +505,9 @@
   margin: 0;
 }
 
-.np-card-mark {
-  font-size: 34px;
-  font-weight: 600;
-  letter-spacing: -0.03em;
+.np-card .np-card-mark { /* `.np-card p` would otherwise win */
+  font-size: 40px;
+  letter-spacing: -0.01em;
   color: var(--np-accent);
   line-height: 1;
   margin-bottom: 4px;
@@ -484,7 +519,7 @@
      titles stay aligned across the row. */
   width: 20px;
   height: 20px;
-  margin: 7px 0;
+  margin: 10px 0;
   fill: none;
   stroke: currentColor;
   stroke-width: 4;
@@ -520,15 +555,19 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 32px;
-  text-align: center;
+}
+
+.np-stats > div {
+  border-top: 3px solid var(--np-ink);
+  padding-top: 18px;
 }
 
 .np-stat-num {
-  font-size: clamp(38px, 5vw, 56px);
-  font-weight: 600;
-  letter-spacing: -0.03em;
-  line-height: 1;
-  margin: 0 0 8px;
+  font-size: clamp(64px, 9vw, 112px);
+  font-stretch: 62%;
+  font-weight: 900;
+  line-height: 0.85;
+  margin: 0 0 12px;
 }
 
 .np-stat-label {
@@ -540,7 +579,7 @@
 
 /* ── Tech disclosure ── */
 .np-tech-list {
-  border-top: 1px solid var(--np-hairline);
+  border-top: 2px solid var(--np-ink);
   max-width: 740px;
 }
 
@@ -553,9 +592,8 @@
   align-items: center;
   gap: 14px;
   padding: 20px 4px;
-  font-size: 19px;
-  font-weight: 600;
-  letter-spacing: -0.02em;
+  font-size: 26px;
+  line-height: 1.05;
   cursor: pointer;
   list-style: none;
 }
@@ -565,17 +603,20 @@
 .np-tech-plus {
   width: 26px;
   height: 26px;
-  border-radius: 50%;
-  background: var(--np-accent);
-  color: #fff;
+  border-radius: var(--np-r-sm);
+  border: 1.5px solid var(--np-ink);
+  color: var(--np-ink);
   display: grid;
   place-items: center;
-  font-size: 17px;
-  font-weight: 400;
+  font-family: var(--np-font);
+  font-size: 18px;
+  font-weight: 500;
   line-height: 1;
   flex-shrink: 0;
-  transition: transform 0.25s ease;
+  transition: transform 0.25s ease, background-color 0.2s ease, color 0.2s ease;
 }
+
+.np-tech summary:hover .np-tech-plus { background: var(--np-ink); color: #fff; }
 
 .np-tech[open] .np-tech-plus { transform: rotate(45deg); }
 
@@ -592,7 +633,7 @@
 .np-phases {
   max-width: 680px;
   margin: 0 auto;
-  border-top: 1px solid var(--np-hairline);
+  border-top: 2px solid var(--np-ink);
   text-align: left;
 }
 
@@ -608,7 +649,6 @@
   flex: 1;
   font-size: 17px;
   font-weight: 500;
-  letter-spacing: -0.02em;
 }
 
 .np-phase--upcoming .np-phase-label { color: var(--np-ink-2); font-weight: 400; }
@@ -616,8 +656,8 @@
 .np-badge {
   font-size: 12px;
   font-weight: 500;
-  padding: 4px 11px;
-  border-radius: 980px;
+  padding: 5px 9px;
+  border-radius: var(--np-r-sm);
   white-space: nowrap;
   flex-shrink: 0;
   border: 1px solid var(--np-hairline);
@@ -638,10 +678,8 @@
   justify-content: space-between;
   gap: 12px;
   padding: 12px 22px;
-  background: rgba(245, 245, 247, 0.82);
-  backdrop-filter: saturate(180%) blur(20px);
-  -webkit-backdrop-filter: saturate(180%) blur(20px);
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  background: var(--np-bg);
+  border-top: 2px solid var(--np-ink);
 }
 
 .np-bar p {
@@ -670,6 +708,128 @@
 .np-reveal.np-in {
   opacity: 1;
   transform: none;
+}
+
+/* ── AI influencers (parody testimonials) ──
+   Inverted section so the joke reads as separate from the real product copy. */
+.np-section--ink {
+  background: var(--np-ink);
+  color: var(--np-bg);
+}
+.np-section--ink .np-body { color: #a3a3a3; }
+.np-section--ink .np-link {
+  color: var(--np-bg);
+  text-decoration-color: #525252;
+}
+.np-section--ink .np-link:hover { text-decoration-color: currentColor; }
+
+.np-reel-head { max-width: 640px; margin-bottom: 40px; }
+
+.np-reel { scroll-padding-inline: 22px; }
+
+.np-reel:focus-visible {
+  outline: 2px solid var(--np-bg);
+  outline-offset: 4px;
+  border-radius: var(--np-r);
+}
+
+.np-reel-card {
+  position: relative;
+  flex: 0 0 260px;
+  aspect-ratio: 9 / 16;
+  margin: 0;
+  border-radius: var(--np-r);
+  overflow: hidden;
+  background: #262626;
+  scroll-snap-align: start;
+}
+
+.np-reel-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1);
+}
+
+.np-reel-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  padding: 5px 10px;
+  border-radius: var(--np-r-sm);
+  background: var(--np-bg);
+  color: var(--np-ink);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.np-reel-cap {
+  position: absolute;
+  inset: auto 0 0;
+  padding: 72px 18px 18px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.88) 45%, rgba(0, 0, 0, 0));
+  color: #fff;
+}
+
+.np-reel-quote {
+  margin: 0 0 12px;
+  font-size: 20px;
+  font-stretch: 75%;
+  font-weight: 700;
+  line-height: 1.12;
+  text-wrap: pretty;
+}
+.np-reel-quote::before { content: "\201C"; }
+.np-reel-quote::after { content: "\201D"; }
+
+.np-reel-handle {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+}
+.np-reel-handle span {
+  display: block;
+  font-weight: 400;
+  color: #a3a3a3;
+}
+
+.np-reel-foot { margin-top: 28px; }
+
+/* ── Parallax photo bands ──
+   The image is taller than its band and slides through it as the band crosses
+   the viewport, so it appears to move slower than the page. */
+.np-parallax {
+  position: relative;
+  height: clamp(260px, 56vh, 560px);
+  overflow: clip; /* `hidden` would make this the image's scroll container and freeze the drift */
+  background: var(--np-ink);
+}
+
+.np-parallax-img {
+  position: absolute;
+  left: 0;
+  top: -15%;
+  width: 100%;
+  height: 130%;
+  object-fit: cover;
+  filter: grayscale(1);
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .np-parallax-img {
+      animation: np-parallax-drift linear both;
+      animation-timeline: view();
+    }
+  }
+}
+
+@keyframes np-parallax-drift {
+  from { transform: translateY(-11%); }
+  to   { transform: translateY(11%); }
 }
 
 /* ── Focus ── */
@@ -701,6 +861,7 @@
   .np-hero { padding-top: 44px; }
   .np-stats { grid-template-columns: 1fr; gap: 36px; }
   .np-card { flex: 0 0 82vw; }
+  .np-reel-card { flex: 0 0 70vw; }
   .np-nav { padding: 0 16px; gap: 8px; }
   .np-nav-actions { gap: 8px; flex-wrap: nowrap; }
   .np-nav-actions .np-pill { font-size: 13px; padding: 8px 12px; }

@@ -11,7 +11,10 @@ export function SiteFooter() {
     <footer className="np-footer">
       <div className="np-footer-inner">
         <div className="np-footer-brand">
-          <Link to="/" className="np-footer-logo">noplan</Link>
+          <Link to="/" className="np-footer-logo">
+            <img className="np-logo-icon" src="/images/noplan-icon-128.png" alt="" width="128" height="128" />
+            noplan
+          </Link>
           <p className="np-footer-tagline">App as a tool</p>
           <p className="np-footer-soon">Coming soon to the App Store</p>
         </div>

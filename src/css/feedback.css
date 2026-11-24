@@ -50,8 +50,8 @@
   letter-spacing: -0.01em;
   padding: 12px 14px;
   background: var(--np-bg);
-  border: 1px solid var(--np-hairline);
-  border-radius: 12px;
+  border: 1.5px solid var(--np-hairline);
+  border-radius: var(--np-r-sm);
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -87,8 +87,9 @@
   padding: 9px 16px;
   font-size: 15px;
   line-height: 1;
-  border: 1px solid var(--np-hairline);
-  border-radius: 980px;
+  border: 1px solid var(--np-ink);
+  border-radius: var(--np-r-sm);
+  font-weight: 500;
   cursor: pointer;
   transition: background-color 0.2s ease, border-color 0.2s ease;
 }

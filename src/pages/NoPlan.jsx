@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
 import { SiteNav } from "../components/SiteNav";
 import { SiteFooter } from "../components/SiteFooter";
+import { InfluencerReel } from "../components/InfluencerReel";
+import { ParallaxBand } from "../components/ParallaxBand";
+import { INFLUENCERS } from "../data/influencers";
 import { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import "../css/noplan.css";
@@ -237,6 +240,8 @@ export function NoPlan() {
         </div>
       </section>
 
+      <ParallaxBand src="/images/gym/platform.jpg" />
+
       {/* ── Why ── */}
       <section className="np-section np-section--alt" id="why">
         <div className="np-inner np-inner--center np-reveal">
@@ -286,6 +291,8 @@ export function NoPlan() {
           </div>
         </div>
       </section>
+
+      <ParallaxBand src="/images/gym/rings.jpg" />
 
       {/* ── AI suggestions ── */}
       <section className="np-section np-section--alt">
@@ -353,6 +360,9 @@ export function NoPlan() {
         </div>
       </section>
 
+      {/* ── AI influencers (parody, clearly labelled) ── */}
+      <InfluencerReel influencers={INFLUENCERS} />
+
       {/* ── Highlights ── */}
       <section className="np-section" id="highlights">
         <div className="np-inner">
@@ -368,6 +378,8 @@ export function NoPlan() {
           </div>
         </div>
       </section>
+
+      <ParallaxBand src="/images/gym/dumbbells.jpg" />
 
       {/* ── Privacy ── */}
       <section className="np-section np-section--alt" id="privacy">
@@ -407,6 +419,8 @@ export function NoPlan() {
           </div>
         </div>
       </section>
+
+      <ParallaxBand src="/images/gym/barbell.jpg" />
 
       {/* ── Tech ── */}
       <section className="np-section np-section--alt">
