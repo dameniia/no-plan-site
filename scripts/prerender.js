@@ -4,6 +4,7 @@
 import { readFile, writeFile, rm } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
+import { validateRoadmap } from "../src/lib/roadmap.js";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const dist = path.join(root, "dist");
@@ -20,6 +21,10 @@ function replaceOnce(html, pattern, replacement, what) {
   if (!pattern.test(html)) throw new Error(`prerender: ${what} not found in dist/index.html`);
   return html.replace(pattern, replacement);
 }
+
+const roadmap = JSON.parse(await readFile(path.join(root, "src/data/roadmap.json"), "utf8"));
+const roadmapErrors = validateRoadmap(roadmap);
+if (roadmapErrors.length) throw new Error("roadmap.json is invalid:\n" + roadmapErrors.join("\n"));
 
 for (const page of PAGES) {
   let html = template;

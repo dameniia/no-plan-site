@@ -24,8 +24,8 @@ async function putItems(items) {
   }
 }
 
-export function useRoadmap() {
-  const editable = import.meta.env.DEV;
+function useEditableRoadmap() {
+  const editable = true;
   const [items, setItems] = useState(data.items);
   const [error, setError] = useState("");
   const itemsRef = useRef(items);
@@ -81,3 +81,12 @@ export function useRoadmap() {
 
   return { items, editable, error, add, update, remove, move, ship };
 }
+
+const NOOP = () => undefined;
+
+// Production: static data only, so the bundler drops the editing code and the dev endpoint call.
+function useReadonlyRoadmap() {
+  return { items: data.items, editable: false, error: "", add: NOOP, update: NOOP, remove: NOOP, move: NOOP, ship: NOOP };
+}
+
+export const useRoadmap = import.meta.env.DEV ? useEditableRoadmap : useReadonlyRoadmap;

@@ -25,6 +25,12 @@ export const PAGES = [
     description: "Everything planned, in progress and released for noplan, with search and filters.",
   },
   {
+    path: "/next",
+    file: "next.html",
+    title: "Next build — noplan",
+    description: "What's planned, in development, in testing and ready for noplan's next build.",
+  },
+  {
     path: "/privacy",
     file: "privacy.html",
     title: "Privacy Policy — noplan",
