@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
+import { roadmapDevStore } from './scripts/roadmap-dev-store.js'
 
 // Dev-only stand-in for public/api/feedback.php (Vite doesn't run PHP). It applies the same
 // validation and answers with the same JSON, but only logs the message instead of emailing it.
@@ -42,5 +43,5 @@ function feedbackDevMock() {
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), feedbackDevMock()],
+  plugins: [react(), feedbackDevMock(), roadmapDevStore()],
 })
