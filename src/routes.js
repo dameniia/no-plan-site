@@ -19,6 +19,12 @@ export const PAGES = [
       "Answers about noplan: devices, exercises, Apple Health and Watch, AI models, and where your data is stored.",
   },
   {
+    path: "/roadmap",
+    file: "roadmap.html",
+    title: "Roadmap — noplan",
+    description: "Everything planned, in progress and released for noplan, with search and filters.",
+  },
+  {
     path: "/privacy",
     file: "privacy.html",
     title: "Privacy Policy — noplan",

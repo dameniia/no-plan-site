@@ -4,6 +4,7 @@ import { NoPlanPost } from "./pages/NoPlanPost";
 import { Feedback } from "./pages/Feedback";
 import { Privacy } from "./pages/Privacy";
 import { Faq } from "./pages/Faq";
+import { Roadmap } from "./pages/Roadmap";
 import { NotFound } from "./pages/NotFound";
 
 // The router itself lives in the entries: BrowserRouter in main.jsx (browser),
@@ -17,6 +18,7 @@ function App() {
       <Route path="/feedback" element={<Feedback />} />
       <Route path="/privacy" element={<Privacy />} />
       <Route path="/faq" element={<Faq />} />
+      <Route path="/roadmap" element={<Roadmap />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
