@@ -2,9 +2,9 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import { STATUSES } from "../lib/roadmap.js";
 
-export function RoadmapItemForm({ item, defaultStatus, onSave, onDelete, onCancel }) {
-  const [title, setTitle] = useState(item ? item.title : "");
-  const [note, setNote] = useState(item ? item.note : "");
+export function RoadmapItemForm({ item, defaultStatus = "backlog", onSave, onDelete, onCancel }) {
+  const [title, setTitle] = useState(item?.title ?? "");
+  const [note, setNote] = useState(item?.note ?? "");
   const [status, setStatus] = useState(item ? item.status : defaultStatus);
   const [error, setError] = useState("");
   const wasReleased = item?.status === "released";

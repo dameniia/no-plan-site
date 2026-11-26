@@ -29,22 +29,30 @@ export function useRoadmap() {
   const [items, setItems] = useState(data.items);
   const [error, setError] = useState("");
   const itemsRef = useRef(items);
+  const savedRef = useRef(data.items);
+  const failedRef = useRef(false);
   const chain = useRef(Promise.resolve());
 
-  // Apply a new list, then save it after any earlier saves. On failure,
-  // restore the list from before this action.
+  // Invariant: after a failure, state equals the last saved list; queued
+  // saves are dropped. Saves run in order; a failed save restores the last
+  // list confirmed on disk and skips every save queued behind it. The next
+  // user action clears the flag and saves normally from the restored list.
   const commit = useCallback((next) => {
-    const previous = itemsRef.current;
+    failedRef.current = false;
     itemsRef.current = next;
     setItems(next);
     setError("");
     chain.current = chain.current.then(async () => {
+      if (failedRef.current) return;
       const ok = await putItems(next);
-      if (!ok) {
-        itemsRef.current = previous;
-        setItems(previous);
-        setError(SAVE_ERROR);
+      if (ok) {
+        savedRef.current = next;
+        return;
       }
+      failedRef.current = true;
+      itemsRef.current = savedRef.current;
+      setItems(savedRef.current);
+      setError(SAVE_ERROR);
     });
   }, []);
 
