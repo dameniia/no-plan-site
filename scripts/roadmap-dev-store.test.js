@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { parseRoadmapBody } from "./roadmap-dev-store.js";
+import { parseRoadmapBody, isAllowedOrigin } from "./roadmap-dev-store.js";
 
 const validItem = {
   id: "r-0001", title: "Thing", note: "", status: "planned", updated: "2026-01-01",
@@ -31,4 +31,11 @@ test("valid roadmap gives 200 with data", () => {
   assert.equal(r.status, 200);
   assert.deepEqual(r.body, { ok: true });
   assert.deepEqual(r.data, data);
+});
+
+test("isAllowedOrigin", () => {
+  assert.equal(isAllowedOrigin(undefined, "localhost:5174"), true);
+  assert.equal(isAllowedOrigin("http://localhost:5174", "localhost:5174"), true);
+  assert.equal(isAllowedOrigin("https://evil.example", "localhost:5174"), false);
+  assert.equal(isAllowedOrigin("not a url", "localhost:5174"), false);
 });

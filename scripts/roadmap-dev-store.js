@@ -15,6 +15,13 @@ export function parseRoadmapBody(raw) {
   return { status: 200, body: { ok: true }, data }
 }
 
+// Browsers send Origin on cross-origin writes; allow only the dev server's own host.
+// No Origin (curl, same-origin GET-like requests) is allowed.
+export function isAllowedOrigin(originHeader, hostHeader) {
+  if (originHeader === undefined) return true
+  try { return new URL(originHeader).host === hostHeader } catch { return false }
+}
+
 export function roadmapDevStore() {
   let root = process.cwd()
   return {
@@ -30,7 +37,13 @@ export function roadmapDevStore() {
         }
         if (req.method !== 'PUT') return reply(405, { ok: false, error: 'method_not_allowed' })
 
+        if (!isAllowedOrigin(req.headers.origin, req.headers.host)) {
+          return reply(403, { ok: false, error: 'forbidden_origin' })
+        }
+
         let raw = ''
+        req.setEncoding('utf8')
+        req.on('error', () => reply(400, { ok: false, error: 'invalid_request' }))
         req.on('data', (chunk) => { raw += chunk })
         req.on('end', async () => {
           const result = parseRoadmapBody(raw)
