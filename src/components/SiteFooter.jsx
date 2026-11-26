@@ -25,7 +25,8 @@ export function SiteFooter() {
             <h2>Product</h2>
             <a href={APP_STORE_URL}>App Store</a>
             <a href="/#highlights">Highlights</a>
-            <a href="/#roadmap">Roadmap</a>
+            <Link to="/roadmap">Roadmap</Link>
+            <Link to="/next">Next build</Link>
             <Link to="/faq">FAQ</Link>
           </div>
           <div className="np-footer-col">

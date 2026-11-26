@@ -5,6 +5,8 @@ import { SiteFooter } from "../components/SiteFooter";
 import { InfluencerReel } from "../components/InfluencerReel";
 import { ParallaxBand } from "../components/ParallaxBand";
 import { INFLUENCERS } from "../data/influencers";
+import roadmap from "../data/roadmap.json";
+import { summarize, statusLabel } from "../lib/roadmap";
 import { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import "../css/noplan.css";
@@ -60,37 +62,7 @@ const TECH = [
   { name: "HealthKit", desc: "Integrates with Apple Health and reads completed workouts from Apple Watch, so closing a ring logs the session for you." },
 ];
 
-const PHASES = [
-  { label: "Tabs and general layout", status: "done" },
-  { label: "Profile tab", status: "done" },
-  { label: "Workout tab", status: "done" },
-  { label: "Exercise database", status: "done" },
-  { label: "Chats for Profile and Workout tabs", status: "done" },
-  { label: "Workout tab: creating a plan", status: "done" },
-  { label: "Workout tab: exercise UX/UI", status: "done" },
-  { label: "Workout tab: search", status: "done" },
-  { label: "Workout tab: AI suggestions", status: "done" },
-  { label: "Workout tab: editing", status: "done" },
-  { label: "On-device AI + Claude API integration", status: "done" },
-  { label: "Activity tab: progress tracking", status: "done" },
-  { label: "AI: chat modes and personalities", status: "done" },
-  { label: "AI: context and memory management", status: "done" },
-  { label: "Apple Health and Apple Fitness integration", status: "done" },
-  { label: "Lock Screen countdown and widgets", status: "done" },
-  { label: "Stats under each exercise: sessions, est. 1RM, trend, total weight", status: "done" },
-  { label: "30 exercise drawings with primary and secondary muscles", status: "done" },
-  { label: "Rest-over nudge on the Dynamic Island and Lock Screen", status: "done" },
-  { label: "Choose your AI: on-device, Claude, or ChatGPT", status: "done" },
-  { label: "App Store release", status: "done" },
-  { label: "Cardio exercises UI/UX fix", status: "active" },
-  { label: "Better audio signals and cues", status: "upcoming" },
-  { label: "Better performance and faster AI exercise suggestions", status: "upcoming" },
-  { label: "New swap-on-the-fly UX", status: "upcoming" },
-  { label: "AI pop-ups with summaries and suggestions after a workout", status: "upcoming" },
-  { label: "Superset UX", status: "upcoming" },
-];
-
-const BADGE = { done: "Completed", active: "In progress", upcoming: "Planned" };
+const summary = summarize(roadmap.items);
 
 // Hero screen recording (Cloudinary). Until `src` is set, the hero shows the static mockup.
 const HERO_VIDEO = {
@@ -147,7 +119,7 @@ export function NoPlan() {
     return () => observer.disconnect();
   }, []);
 
-  // Arriving from another page with a hash (e.g. /#roadmap from the FAQ): the browser
+  // Arriving from another page with a hash (e.g. /#highlights from the footer): the browser
   // looks for the anchor before React renders it, so scroll once the page exists.
   useEffect(() => {
     const id = window.location.hash.slice(1);
@@ -450,16 +422,19 @@ export function NoPlan() {
           <p className="np-eyebrow">Roadmap</p>
           <h2 className="np-heading">Built in the open.</h2>
           <p className="np-body">
-            {PHASES.filter((p) => p.status === "done").length} of {PHASES.length} phases
-            completed.
+            {summary.released} released · {summary.inProgress} in progress
           </p>
           <div className="np-phases">
-            {PHASES.map(({ label, status }) => (
-              <div key={label} className={`np-phase np-phase--${status}`}>
-                <span className="np-phase-label">{label}</span>
-                <span className={`np-badge np-badge--${status}`}>{BADGE[status]}</span>
+            {summary.current.map((item) => (
+              <div key={item.id} className="np-phase">
+                <span className="np-phase-label">{item.title}</span>
+                <span className="np-badge np-badge--active">{statusLabel(item.status)}</span>
               </div>
             ))}
+          </div>
+          <div className="np-roadmap-links">
+            <Link to="/roadmap" className="np-pill np-pill--ghost">Full roadmap</Link>
+            <Link to="/next" className="np-pill np-pill--ghost">Next build</Link>
           </div>
         </div>
       </section>
