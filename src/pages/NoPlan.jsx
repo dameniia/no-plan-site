@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { SiteNav } from "../components/SiteNav";
+import { APP_STORE_URL } from "../lib/appStore";
 import { SiteFooter } from "../components/SiteFooter";
 import { InfluencerReel } from "../components/InfluencerReel";
 import { ParallaxBand } from "../components/ParallaxBand";
@@ -80,7 +81,8 @@ const PHASES = [
   { label: "30 exercise drawings with primary and secondary muscles", status: "done" },
   { label: "Rest-over nudge on the Dynamic Island and Lock Screen", status: "done" },
   { label: "Choose your AI: on-device, Claude, or ChatGPT", status: "done" },
-  { label: "App Store release", status: "active" },
+  { label: "App Store release", status: "done" },
+  { label: "Cardio exercises UI/UX fix", status: "active" },
   { label: "Better audio signals and cues", status: "upcoming" },
   { label: "Better performance and faster AI exercise suggestions", status: "upcoming" },
   { label: "New swap-on-the-fly UX", status: "upcoming" },
@@ -192,7 +194,8 @@ export function NoPlan() {
             refine your workout plans and stick to a daily routine.
           </p>
           <div className="np-cta-row">
-            <a href="#highlights" className="np-pill np-pill--solid np-pill--lg">Get the highlights</a>
+            <a href={APP_STORE_URL} className="np-pill np-pill--solid np-pill--lg">Download on the App Store</a>
+            <a href="#highlights" className="np-pill np-pill--ghost np-pill--lg">Get the highlights</a>
             <a href="#privacy" className="np-pill np-pill--ghost np-pill--lg">How your data is handled</a>
           </div>
           <div className="np-split-media">
@@ -462,8 +465,9 @@ export function NoPlan() {
       </section>
 
       <div className="np-bar">
-        <p><b>noplan</b> — in development, coming to the App Store.</p>
+        <p><b>noplan</b> — free on the App Store for iPhone.</p>
         <div className="np-bar-actions">
+          <a href={APP_STORE_URL} className="np-pill np-pill--solid">Download</a>
           <Link to="/feedback" className="np-pill np-pill--ghost">Send feedback</Link>
           <a href="https://adameniia.com" className="np-pill np-pill--ghost">Back to portfolio</a>
         </div>

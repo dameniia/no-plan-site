@@ -1,9 +1,10 @@
 import { Link, NavLink } from "react-router-dom";
-import PropTypes from "prop-types";
+import { APP_STORE_URL } from "../lib/appStore";
 
-// Shared top bar: logo, text links (stay visible on phones), and one call to action.
-// "Roadmap" is a section of the home page, so it's a plain anchor rather than a route.
-export function SiteNav({ showFeedback = true }) {
+// Shared top bar: logo, text links, and one call to action (the App Store).
+// "Roadmap" is a section of the home page, so it's a plain anchor; it hides on phones
+// so Feedback always fits (the bottom bar with its feedback button is hidden there).
+export function SiteNav() {
   return (
     <nav className="np-nav" aria-label="Main">
       <Link to="/" className="np-nav-logo">
@@ -12,19 +13,18 @@ export function SiteNav({ showFeedback = true }) {
       </Link>
       <div className="np-nav-links">
         <NavLink to="/faq" className="np-nav-link">FAQ</NavLink>
-        <a href="/#roadmap" className="np-nav-link">Roadmap</a>
+        <a href="/#roadmap" className="np-nav-link np-nav-link--wide">Roadmap</a>
+        <NavLink to="/feedback" className="np-nav-link">Feedback</NavLink>
         <NavLink to="/privacy" className="np-nav-link np-nav-link--optional">Privacy</NavLink>
       </div>
-      {showFeedback && (
-        <Link to="/feedback" className="np-pill np-pill--solid np-nav-cta">
-          <span className="np-nav-cta-long">Send feedback</span>
-          <span className="np-nav-cta-short" aria-hidden="true">Feedback</span>
-        </Link>
-      )}
+      <a
+        href={APP_STORE_URL}
+        className="np-pill np-pill--solid np-nav-cta"
+        aria-label="Download noplan on the App Store"
+      >
+        <span className="np-nav-cta-long">Download on the App Store</span>
+        <span className="np-nav-cta-short" aria-hidden="true">Download</span>
+      </a>
     </nav>
   );
 }
-
-SiteNav.propTypes = {
-  showFeedback: PropTypes.bool,
-};

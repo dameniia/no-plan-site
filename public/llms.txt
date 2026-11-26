@@ -1,9 +1,10 @@
 # noplan
 
-> noplan is a workout tracker for iPhone (iOS 18 or later, optional Apple Watch companion). You build your own plan and swap exercises as you go instead of following a fixed program. No account, no subscriptions, no in-app purchases; data stays on the iPhone. AI is optional: Apple's on-device model by default, or Claude or ChatGPT with the user's own API key. Coming soon to the App Store.
+> noplan is a workout tracker for iPhone (iOS 18 or later, optional Apple Watch companion). You build your own plan and swap exercises as you go instead of following a fixed program. No account, no subscriptions, no in-app purchases; data stays on the iPhone. AI is optional: Apple's on-device model by default, or Claude or ChatGPT with the user's own API key. Free on the App Store as "noplan Fitness": https://apps.apple.com/app/id6838410863
 
 ## Pages
 
+- [App Store](https://apps.apple.com/app/id6838410863): download noplan Fitness for iPhone (free)
 - [Home](https://no-plan.app/): what noplan does, highlights, privacy approach and roadmap
 - [FAQ](https://no-plan.app/faq): devices, exercises (270+), Apple Health and Watch, AI models, data storage and deletion
 - [Privacy Policy](https://no-plan.app/privacy): what the app stores, what reaches an AI provider, and what the website collects

@@ -53,7 +53,7 @@ export function Feedback() {
 
   return (
     <div className="np-root">
-      <SiteNav showFeedback={false} />
+      <SiteNav />
 
       <main className="np-section np-feedback">
         <div className="np-feedback-inner">

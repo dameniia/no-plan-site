@@ -40,7 +40,7 @@ export function InfluencerReel({ influencers }) {
             Loved by influencers (who don&apos;t exist).
           </h2>
           <p className="np-body">
-            Every creator below is AI-generated. We don&apos;t have famous fans yet,
+            Every creator below is AI-generated. We can&apos;t afford real ones yet,
             so we made some up.
           </p>
         </div>
