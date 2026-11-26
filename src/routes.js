@@ -37,6 +37,8 @@ export const PAGES = [
     title: "noplan — App as a tool",
     description: "noplan post canvas.",
     noindex: true,
+    // Screenshot canvas: iOS Safari's App Store banner would sit on top of it
+    noAppBanner: true,
   },
   {
     // Served by Apache as the body of every 404 (ErrorDocument in public/.htaccess)

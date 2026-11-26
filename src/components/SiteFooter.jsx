@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { APP_STORE_URL } from "../lib/appStore";
 
 const CONTACT = "admin@no-plan.app";
 
@@ -16,12 +17,13 @@ export function SiteFooter() {
             noplan
           </Link>
           <p className="np-footer-tagline">App as a tool</p>
-          <p className="np-footer-soon">Coming soon to the App Store</p>
+          <a href={APP_STORE_URL} className="np-footer-store">Download on the App Store</a>
         </div>
 
         <nav className="np-footer-cols" aria-label="Footer">
           <div className="np-footer-col">
             <h2>Product</h2>
+            <a href={APP_STORE_URL}>App Store</a>
             <a href="/#highlights">Highlights</a>
             <a href="/#roadmap">Roadmap</a>
             <Link to="/faq">FAQ</Link>

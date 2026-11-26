@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { SiteNav } from "../components/SiteNav";
+import { APP_STORE_URL } from "../lib/appStore";
 import { SiteFooter } from "../components/SiteFooter";
 import "../css/noplan.css";
 import "../css/faq.css";
@@ -24,10 +25,11 @@ const GROUPS = [
         ),
       },
       {
-        q: "When can I get it?",
+        q: "Where can I get it?",
         a: (
           <p>
-            noplan is being prepared for the App Store. Follow progress on the{" "}
+            noplan is free on the <a href={APP_STORE_URL}>App Store</a> (listed as noplan
+            Fitness) for iPhone with iOS 18 or later. See what&apos;s coming next on the{" "}
             <a href="/#roadmap">roadmap</a>.
           </p>
         ),
