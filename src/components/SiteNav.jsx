@@ -3,7 +3,7 @@ import { APP_STORE_URL } from "../lib/appStore";
 
 // Shared top bar: logo, text links, and one call to action (the App Store).
 // "Roadmap" is a section of the home page, so it's a plain anchor; it hides on phones
-// so Feedback always fits (the bottom bar with its feedback button is hidden there).
+// and small tablets so Feedback always fits (the bottom bar with its feedback button is hidden there).
 export function SiteNav() {
   return (
     <nav className="np-nav" aria-label="Main">
@@ -20,7 +20,7 @@ export function SiteNav() {
       <a
         href={APP_STORE_URL}
         className="np-pill np-pill--solid np-nav-cta"
-        aria-label="Download noplan on the App Store"
+        aria-label="Download on the App Store"
       >
         <span className="np-nav-cta-long">Download on the App Store</span>
         <span className="np-nav-cta-short" aria-hidden="true">Download</span>

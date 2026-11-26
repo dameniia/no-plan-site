@@ -38,6 +38,9 @@ for (const page of PAGES) {
       : `<link rel="canonical" href="${SITE}${page.path === "/" ? "/" : page.path}" />`,
     "canonical link"
   );
+  if (page.noAppBanner) {
+    html = replaceOnce(html, /\s*<meta name="apple-itunes-app" content="[^"]*" \/>/, "", "apple-itunes-app meta");
+  }
   html = replaceOnce(html, /<div id="root"><\/div>/, `<div id="root">${render(page.path)}</div>`, "#root");
 
   await writeFile(path.join(dist, page.file), html);

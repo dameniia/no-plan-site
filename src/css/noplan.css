@@ -96,8 +96,8 @@
   gap: 10px;
 }
 
-/* Text links in the shared nav (SiteNav). On phones Roadmap (--wide) hides at <=600px
-   and Privacy (--optional) below 390px; FAQ and Feedback always stay visible. */
+/* Text links in the shared nav (SiteNav). Roadmap (--wide) hides at <=660px and
+   Privacy (--optional) below 390px; FAQ and Feedback always stay visible. */
 .np-nav-links {
   display: flex;
   align-items: center;
@@ -170,6 +170,7 @@
 .np-footer-store:hover {
   background: var(--np-ink);
   color: var(--np-bg);
+  text-decoration: none;
 }
 
 .np-footer-cols {
@@ -607,25 +608,39 @@
 
 .np-tech summary::-webkit-details-marker { display: none; }
 
+/* Square toggle with a "+" drawn from two bars. Opening turns only the bars into an
+   "x"; the square itself never rotates (rotating it made a diamond). */
 .np-tech-plus {
+  position: relative;
   width: 26px;
   height: 26px;
+  box-sizing: border-box;
   border-radius: var(--np-r-sm);
   border: 1.5px solid var(--np-ink);
   color: var(--np-ink);
-  display: grid;
-  place-items: center;
-  font-family: var(--np-font);
-  font-size: 18px;
-  font-weight: 500;
-  line-height: 1;
   flex-shrink: 0;
-  transition: transform 0.25s ease, background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
+
+.np-tech-plus::before,
+.np-tech-plus::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 1.5px;
+  margin: -0.75px 0 0 -6px;
+  background: currentColor;
+  transition: transform 0.25s ease;
+}
+
+.np-tech-plus::after { transform: rotate(90deg); }
 
 .np-tech summary:hover .np-tech-plus { background: var(--np-ink); color: #fff; }
 
-.np-tech[open] .np-tech-plus { transform: rotate(45deg); }
+.np-tech[open] .np-tech-plus::before { transform: rotate(45deg); }
+.np-tech[open] .np-tech-plus::after { transform: rotate(135deg); }
 
 .np-tech p {
   font-size: 16px;
@@ -877,7 +892,6 @@
   .np-nav-actions .np-pill { font-size: 13px; padding: 8px 12px; }
   .np-nav-actions .np-pill--ghost:not(.np-pill--keep) { display: none; }
   .np-nav-links { gap: 12px; }
-  .np-nav-link--wide { display: none; }
   .np-nav-cta { margin-left: 4px; font-size: 13px; padding: 8px 12px; }
   .np-nav-cta-long { display: none; }
   .np-nav-cta-short { display: inline; }
@@ -889,12 +903,22 @@
   .np-footer-base { margin-top: 36px; }
 }
 
-/* Very narrow phones: Privacy is still in the footer, so drop it from the top bar */
+/* Small tablets: four links plus the long App Store label don't fit below ~645px */
+@media (max-width: 660px) {
+  .np-nav-link--wide { display: none; }
+}
+
+/* Very narrow phones: Privacy is still in the footer, so drop it from the top bar,
+   and tighten the gaps so the first-generation iPhone SE (320px) still fits */
 @media (max-width: 389px) {
   .np-nav-link--optional { display: none; }
+  .np-nav { gap: 4px; }
+  .np-nav-links { gap: 8px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .np-reveal { opacity: 1; transform: none; transition: none; }
-  .np-tech-plus { transition: none; }
+  .np-tech-plus,
+  .np-tech-plus::before,
+  .np-tech-plus::after { transition: none; }
 }

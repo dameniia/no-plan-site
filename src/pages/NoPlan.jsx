@@ -434,7 +434,7 @@ export function NoPlan() {
             {TECH.map(({ name, desc }) => (
               <details key={name} className="np-tech">
                 <summary>
-                  <span className="np-tech-plus" aria-hidden="true">+</span>
+                  <span className="np-tech-plus" aria-hidden="true" />
                   {name}
                 </summary>
                 <p>{desc}</p>
