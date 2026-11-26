@@ -30,7 +30,7 @@ const GROUPS = [
           <p>
             noplan is free on the <a href={APP_STORE_URL}>App Store</a> (listed as noplan
             Fitness) for iPhone with iOS 18 or later. See what&apos;s coming next on the{" "}
-            <a href="/#roadmap">roadmap</a>.
+            <Link to="/roadmap">roadmap</Link>.
           </p>
         ),
       },

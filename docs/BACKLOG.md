@@ -5,12 +5,7 @@ Site work that's known but not done yet. Newest first within each section. Move 
 
 ## Next
 
-- **"Next build" board page (`/next`).** Kanban-style page showing fixes and features for the
-  next app build, in four columns: Planned, In dev, In test, Ready for next build. Read-only for
-  visitors; drag and drop works only under `pnpm dev`, saving to a data file in the repo
-  (same idea as the dev-only `feedbackDevMock` plugin), then publish by pushing. Link it from the
-  Roadmap section and the footer. Open questions: ticket fields (title, Fix/Feature tag, note?),
-  and whether shipped tickets disappear or move to a "Shipped in 1.x" list.
+Nothing queued.
 
 ## Fixes
 

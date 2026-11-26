@@ -2,8 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 import { APP_STORE_URL } from "../lib/appStore";
 
 // Shared top bar: logo, text links, and one call to action (the App Store).
-// "Roadmap" is a section of the home page, so it's a plain anchor; it hides on phones
-// and small tablets so Feedback always fits (the bottom bar with its feedback button is hidden there).
+// "Roadmap" hides on phones and small tablets so Feedback always fits (the bottom bar with its feedback button is hidden there).
 export function SiteNav() {
   return (
     <nav className="np-nav" aria-label="Main">
@@ -13,7 +12,7 @@ export function SiteNav() {
       </Link>
       <div className="np-nav-links">
         <NavLink to="/faq" className="np-nav-link">FAQ</NavLink>
-        <a href="/#roadmap" className="np-nav-link np-nav-link--wide">Roadmap</a>
+        <NavLink to="/roadmap" className="np-nav-link np-nav-link--wide">Roadmap</NavLink>
         <NavLink to="/feedback" className="np-nav-link">Feedback</NavLink>
         <NavLink to="/privacy" className="np-nav-link np-nav-link--optional">Privacy</NavLink>
       </div>

@@ -8,6 +8,8 @@
 - [Home](https://no-plan.app/): what noplan does, highlights, privacy approach and roadmap
 - [FAQ](https://no-plan.app/faq): devices, exercises (270+), Apple Health and Watch, AI models, data storage and deletion
 - [Privacy Policy](https://no-plan.app/privacy): what the app stores, what reaches an AI provider, and what the website collects
+- [Roadmap](https://no-plan.app/roadmap): everything planned, in progress and released, with search and filters
+- [Next build](https://no-plan.app/next): what's planned, in development, in testing and ready for the next app build
 - [Feedback](https://no-plan.app/feedback): send feedback or a question to the developer
 
 ## Contact

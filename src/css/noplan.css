@@ -673,8 +673,6 @@
   font-weight: 500;
 }
 
-.np-phase--upcoming .np-phase-label { color: var(--np-ink-2); font-weight: 400; }
-
 .np-badge {
   font-size: 12px;
   font-weight: 500;
@@ -688,6 +686,14 @@
 
 .np-badge--done   { background: var(--np-accent); border-color: var(--np-accent); color: #fff; }
 .np-badge--active { border-color: var(--np-accent); color: var(--np-accent-ink); }
+
+.np-roadmap-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 28px;
+}
 
 /* ── Sticky footer bar ── */
 .np-bar {
