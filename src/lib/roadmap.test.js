@@ -50,6 +50,10 @@ test("validateRoadmap reports each problem with the item id", () => {
     [{ ...base, title: "  " }, "r-0001"],
     [{ ...base, title: "x".repeat(121) }, "r-0001"],
     [{ ...base, note: "x".repeat(501) }, "r-0001"],
+    [{ ...base, status: "released", build: "v1" }, "r-0001"],
+    [{ ...base, status: "released", build: "1.2.3.4" }, "r-0001"],
+    [{ ...base, updated: "2026-1-1" }, "r-0001"],
+    [{ ...base, updated: undefined }, "r-0001"],
   ];
   for (const [item, id] of cases) {
     const errs = validateRoadmap({ items: [item] });
@@ -71,9 +75,26 @@ test("filterItems", () => {
   assert.equal(filterItems(f, {}).length, f.length);
 });
 
-test("sortNewestFirst keeps file order on ties", () => {
+test("sortNewestFirst sorts by updated, newest first", () => {
   assert.deepEqual(ids(sortNewestFirst(fixture())),
     ["r-0006", "r-0005", "r-0003", "r-0004", "r-0002", "r-0001", "r-0009", "r-0008", "r-0007"]);
+});
+
+test("sortNewestFirst breaks same-day ties by stage", () => {
+  const sameDay = fixture().map((i) => ({ ...i, updated: "2026-01-01" }));
+  // In progress (file order), planned, backlog, then released in reverse file order.
+  assert.deepEqual(ids(sortNewestFirst(sameDay)),
+    ["r-0003", "r-0004", "r-0005", "r-0006", "r-0002", "r-0001", "r-0009", "r-0008", "r-0007"]);
+});
+
+test("sortNewestFirst on the real roadmap.json starts with current work", async () => {
+  const { items } = JSON.parse(await readFile(new URL("../data/roadmap.json", import.meta.url), "utf8"));
+  const sorted = sortNewestFirst(items);
+  assert.equal(sorted[0].title, "Cardio exercises UI/UX fix");
+  const backlog = items.filter((i) => i.status === "backlog");
+  assert.deepEqual(ids(sorted.slice(1, 6)), ids(backlog));
+  assert.equal(sorted[6].title, "App Store release");
+  assert.ok(sorted.slice(6).every((i) => i.status === "released"));
 });
 
 test("listBuilds compares numerically", () => {

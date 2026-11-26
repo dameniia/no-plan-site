@@ -1,8 +1,9 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import data from "../data/roadmap.json";
 import { addItem, updateItem, removeItem, moveItem, shipBuild } from "./roadmap.js";
 
 const SAVE_ERROR = "Couldn't save: is pnpm dev running?";
+const CONFLICT_ERROR = "roadmap.json changed outside this page. It has been reloaded; redo your last change.";
 
 // Local date as YYYY-MM-DD, computed at action time.
 function today() {
@@ -11,16 +12,34 @@ function today() {
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 }
 
-async function putItems(items) {
+const sameItems = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+
+// GET the file as it is on disk: { items, version } or null if the dev server can't be reached.
+async function getRoadmap() {
+  try {
+    const res = await fetch("/__roadmap", { cache: "no-store" });
+    if (!res.ok) return null;
+    const body = await res.json();
+    return body.ok && Array.isArray(body.items) && body.version ? body : null;
+  } catch {
+    return null;
+  }
+}
+
+// PUT the whole list on top of `baseVersion`: { status: "ok", version } | { status: "conflict" } | { status: "error" }.
+async function putItems(items, baseVersion) {
   try {
     const res = await fetch("/__roadmap", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ items }),
+      body: JSON.stringify({ items, baseVersion }),
     });
-    return res.ok;
+    if (res.status === 409) return { status: "conflict" };
+    if (!res.ok) return { status: "error" };
+    const body = await res.json();
+    return body.version ? { status: "ok", version: body.version } : { status: "error" };
   } catch {
-    return false;
+    return { status: "error" };
   }
 }
 
@@ -29,32 +48,85 @@ function useEditableRoadmap() {
   const [items, setItems] = useState(data.items);
   const [error, setError] = useState("");
   const itemsRef = useRef(items);
-  const savedRef = useRef(data.items);
+  const savedRef = useRef(data.items); // last list confirmed on disk
+  const versionRef = useRef(null); // sha1 of the file savedRef came from
+  const pendingRef = useRef(0); // saves queued or in flight
   const failedRef = useRef(false);
   const chain = useRef(Promise.resolve());
 
-  // Invariant: after a failure, state equals the last saved list; queued
-  // saves are dropped. Saves run in order; a failed save restores the last
-  // list confirmed on disk and skips every save queued behind it. The next
-  // user action clears the flag and saves normally from the restored list.
-  const commit = useCallback((next) => {
-    failedRef.current = false;
-    itemsRef.current = next;
-    setItems(next);
-    setError("");
-    chain.current = chain.current.then(async () => {
-      if (failedRef.current) return;
-      const ok = await putItems(next);
-      if (ok) {
-        savedRef.current = next;
-        return;
-      }
-      failedRef.current = true;
-      itemsRef.current = savedRef.current;
-      setItems(savedRef.current);
-      setError(SAVE_ERROR);
-    });
+  // Runs inside the chain. Loads the file and, when it changed outside this page and no
+  // local edit is queued on top of savedRef, replaces the page's list with it.
+  // Returns "synced" (versionRef matches the file), "stale" (file differs, kept local edits) or "offline".
+  const sync = useCallback(async () => {
+    const disk = await getRoadmap();
+    if (!disk) return "offline";
+    if (disk.version === versionRef.current) return "synced";
+    if (sameItems(disk.items, savedRef.current)) {
+      versionRef.current = disk.version;
+      return "synced";
+    }
+    if (pendingRef.current > 0) return "stale";
+    versionRef.current = disk.version;
+    savedRef.current = disk.items;
+    itemsRef.current = disk.items;
+    setItems(disk.items);
+    return "synced";
   }, []);
+
+  const refresh = useCallback(() => {
+    chain.current = chain.current.then(sync);
+  }, [sync]);
+
+  // Load the file on mount and whenever the window regains focus with nothing left to save.
+  useEffect(() => {
+    refresh();
+    const onFocus = () => {
+      if (pendingRef.current === 0) refresh();
+    };
+    window.addEventListener("focus", onFocus);
+    return () => window.removeEventListener("focus", onFocus);
+  }, [refresh]);
+
+  // Invariant: after a failure, state equals the last list confirmed on disk
+  // (savedRef) and queued saves are dropped. Saves run in order, each on top of
+  // the file version the page last saw; a failed save restores savedRef and skips
+  // every save queued behind it. A conflict (the file changed outside this page)
+  // fails the same way, then reloads the file so savedRef/versionRef match disk.
+  // The next user action clears the flag and saves normally from the restored list.
+  const commit = useCallback(
+    (next) => {
+      failedRef.current = false;
+      itemsRef.current = next;
+      setItems(next);
+      setError("");
+      pendingRef.current += 1;
+      chain.current = chain.current.then(async () => {
+        try {
+          if (failedRef.current) return;
+          let result;
+          if (versionRef.current === null && (await sync()) === "stale") result = { status: "conflict" };
+          else result = await putItems(next, versionRef.current);
+          if (result.status === "ok") {
+            savedRef.current = next;
+            versionRef.current = result.version;
+            return;
+          }
+          failedRef.current = true;
+          itemsRef.current = savedRef.current;
+          setItems(savedRef.current);
+          if (result.status === "conflict") {
+            setError(CONFLICT_ERROR);
+            refresh();
+          } else {
+            setError(SAVE_ERROR);
+          }
+        } finally {
+          pendingRef.current -= 1;
+        }
+      });
+    },
+    [sync, refresh],
+  );
 
   const run = useCallback(
     (transform) => {

@@ -54,6 +54,7 @@
 .np-rm-form-field select:focus-visible,
 .np-rm-chip:focus-visible,
 .np-rm-item-btn:focus-visible,
+.np-board-card--edit:focus-visible,
 .np-rm-clear:focus-visible {
   outline: 2px solid var(--np-accent);
   outline-offset: 2px;
@@ -78,7 +79,7 @@
 
 .np-rm-chip:hover { background: var(--np-hairline); }
 .np-rm-chip--on,
-.np-rm-chip--on:hover { background: var(--np-ink); color: #fff; }
+.np-rm-chip--on:hover { background: var(--np-ink); color: var(--np-bg); }
 
 .np-rm-meta {
   display: flex;
@@ -235,6 +236,11 @@
 }
 
 .np-board-card[draggable="true"] { cursor: grab; }
+.np-board-card--edit:hover .np-rm-item-title { text-decoration: underline; }
+
+/* Dev: space below the last card (and in an empty column) is a drop target for "bottom of column". */
+.np-board-col--edit .np-board-list { min-height: 48px; padding-bottom: 48px; }
+.np-board-col--edit .np-board-empty { min-height: 48px; }
 .np-board-card--drop-before::before {
   content: "";
   position: absolute;

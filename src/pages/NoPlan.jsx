@@ -424,14 +424,18 @@ export function NoPlan() {
           <p className="np-body">
             {summary.released} released · {summary.inProgress} in progress
           </p>
-          <div className="np-phases">
-            {summary.current.map((item) => (
-              <div key={item.id} className="np-phase">
-                <span className="np-phase-label">{item.title}</span>
-                <span className="np-badge np-badge--active">{statusLabel(item.status)}</span>
-              </div>
-            ))}
-          </div>
+          {summary.current.length > 0 ? (
+            <div className="np-phases">
+              {summary.current.map((item) => (
+                <div key={item.id} className="np-phase">
+                  <span className="np-phase-label">{item.title}</span>
+                  <span className="np-badge np-badge--active">{statusLabel(item.status)}</span>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="np-body">Nothing in progress right now.</p>
+          )}
           <div className="np-roadmap-links">
             <Link to="/roadmap" className="np-pill np-pill--ghost">Full roadmap</Link>
             <Link to="/next" className="np-pill np-pill--ghost">Next build</Link>

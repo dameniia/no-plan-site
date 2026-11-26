@@ -15,6 +15,7 @@ export const IN_PROGRESS = ["in-dev", "in-test", "ready"];
 const TITLE_MAX = 120;
 const NOTE_MAX = 500;
 const VERSION_RE = /^\d+(\.\d+){0,2}$/;
+const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const RELEASE_ERROR = "Use Ship build to release items.";
 
 export function statusLabel(id) {
@@ -43,6 +44,10 @@ export function validateRoadmap(data) {
     }
     if (item.status === "released" && !item.build) errors.push(`${id}: released item has no build`);
     if (item.status !== "released" && item.build) errors.push(`${id}: only released items can have a build`);
+    if (item.build && !VERSION_RE.test(String(item.build))) errors.push(`${id}: build "${item.build}" must look like 1.2 or 1.2.3`);
+    if (typeof item.updated !== "string" || !DATE_RE.test(item.updated)) {
+      errors.push(`${id}: updated "${item.updated}" must be a YYYY-MM-DD date`);
+    }
   }
   return errors;
 }
@@ -57,9 +62,24 @@ export function filterItems(items, { query = "", statuses = [], build = "" } = {
   });
 }
 
+// Tie-break order for items updated on the same day: work in progress first,
+// then planned, backlog and released.
+const STAGE_RANK = { "in-dev": 0, "in-test": 0, ready: 0, planned: 1, backlog: 2, released: 3 };
+
 export function sortNewestFirst(items) {
-  // Array.prototype.sort is stable, so ties keep file order.
-  return [...items].sort((a, b) => (a.updated < b.updated ? 1 : a.updated > b.updated ? -1 : 0));
+  // Newest `updated` first. Same day: by stage rank; released ties run in
+  // reverse file order (latest phase first); other ties keep file order.
+  return items
+    .map((item, index) => ({ item, index }))
+    .sort((a, b) => {
+      if (a.item.updated !== b.item.updated) return a.item.updated < b.item.updated ? 1 : -1;
+      const ra = STAGE_RANK[a.item.status] ?? 4;
+      const rb = STAGE_RANK[b.item.status] ?? 4;
+      if (ra !== rb) return ra - rb;
+      if (a.item.status === "released" && b.item.status === "released") return b.index - a.index;
+      return a.index - b.index;
+    })
+    .map(({ item }) => item);
 }
 
 function compareVersions(a, b) {

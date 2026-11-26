@@ -61,8 +61,11 @@ export function Roadmap() {
     const known = new Set(STATUSES.map((s) => s.id));
     setQuery(params.get("q") || "");
     setStatuses((params.get("status") || "").split(",").filter((s) => known.has(s)));
-    setBuild(params.get("build") || "");
+    const b = params.get("build") || "";
+    setBuild(listBuilds(items).includes(b) ? b : "");
     setSynced(true);
+    // Mount only: later list changes must not reset the filters.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Write filters back to the URL on change, once the initial read has landed.

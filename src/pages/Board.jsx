@@ -78,6 +78,15 @@ export function Board() {
   const leave = (e, clear) => {
     if (!e.currentTarget.contains(e.relatedTarget)) clear();
   };
+  // In dev the card <li> itself is the click/keyboard target (role="button"):
+  // Firefox won't start a drag from a <button> inside a draggable element.
+  const cardKeyDown = (e, id) => {
+    if (e.target !== e.currentTarget) return;
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      setEditing(id);
+    }
+  };
   const dropOn = (e, status, beforeId) => {
     e.preventDefault();
     e.stopPropagation();
@@ -123,7 +132,9 @@ export function Board() {
               return (
                 <section
                   key={status}
-                  className={`np-board-col${overCol === status ? " np-board-col--over" : ""}`}
+                  className={`np-board-col${editable ? " np-board-col--edit" : ""}${
+                    overCol === status ? " np-board-col--over" : ""
+                  }`}
                   aria-labelledby={headId}
                   onDragOver={editable ? (e) => colDragOver(e, status) : undefined}
                   onDragLeave={editable ? (e) => leave(e, () => setOverCol(null)) : undefined}
@@ -170,9 +181,13 @@ export function Board() {
                         ) : (
                           <li
                             key={item.id}
-                            className={`np-rm-item np-board-card${
+                            className={`np-rm-item np-board-card${editable ? " np-board-card--edit" : ""}${
                               overCard === item.id ? " np-board-card--drop-before" : ""
                             }`}
+                            role={editable ? "button" : undefined}
+                            tabIndex={editable ? 0 : undefined}
+                            onClick={editable ? () => setEditing(item.id) : undefined}
+                            onKeyDown={editable ? (e) => cardKeyDown(e, item.id) : undefined}
                             draggable={editable || undefined}
                             onDragStart={
                               editable
@@ -188,19 +203,9 @@ export function Board() {
                             onDragLeave={editable ? (e) => leave(e, () => setOverCard(null)) : undefined}
                             onDrop={editable ? (e) => dropOn(e, status, item.id) : undefined}
                           >
-                            {editable ? (
-                              <button
-                                type="button"
-                                className="np-rm-item-btn"
-                                onClick={() => setEditing(item.id)}
-                              >
-                                <CardBody item={item} />
-                              </button>
-                            ) : (
-                              <div className="np-rm-item-static">
-                                <CardBody item={item} />
-                              </div>
-                            )}
+                            <div className="np-rm-item-static">
+                              <CardBody item={item} />
+                            </div>
                           </li>
                         ),
                       )}
